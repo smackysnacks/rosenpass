@@ -40,7 +40,7 @@ pub fn execute(args: Args, level: LevelFilter) -> miette::Result<()> {
     let listen_port = listen.port();
 
     let wgsk_path = sk_dir.as_path().join("wgsk");
-    let wgsk = utils::read_to_string(&wgsk_path)?;
+    let wgsk = utils::read_to_string(wgsk_path)?;
 
     log::info!("setting up wireguard interface");
     setup_interface(

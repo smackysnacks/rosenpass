@@ -17,10 +17,10 @@ pub fn write_to_file<P>(path: P, content: &[u8]) -> miette::Result<()>
 where
     P: AsRef<Path>,
 {
-    Ok(File::create(path)
+    File::create(path)
         .into_diagnostic()?
-        .write_all(&content)
-        .into_diagnostic()?)
+        .write_all(content)
+        .into_diagnostic()
 }
 
 pub fn read_from_file<P>(path: P) -> miette::Result<[u8; 32]>
@@ -64,7 +64,6 @@ pub fn start_server(
     } else {
         Verbosity::Quiet
     };
-
     log::info!("verbosity: {verbosity:?}");
 
     let mut server = Box::new(anyhow_to_miette(AppServer::new(sk, pk, listen, verbosity))?);

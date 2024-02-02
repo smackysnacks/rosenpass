@@ -32,7 +32,7 @@ pub fn execute(args: Args) -> miette::Result<()> {
     }
 
     log::debug!("creating secret keys directory");
-    fs::create_dir_all(dir.as_path()).into_diagnostic()?;
+    fs::create_dir_all(&dir).into_diagnostic()?;
 
     log::info!("generating keys");
 
@@ -41,7 +41,7 @@ pub fn execute(args: Args) -> miette::Result<()> {
     let wgsk = wireguard_keys::Privkey::generate();
 
     log::debug!("writing wireguard secret keys to file");
-    utils::write_to_file(dir.as_path().join("wgsk"), &wgsk.to_string().as_bytes())?;
+    utils::write_to_file(dir.as_path().join("wgsk"), wgsk.to_string().as_bytes())?;
 
     log::debug!("generating rosenpass secret key");
     let mut ssk = SSk::random();

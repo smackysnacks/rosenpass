@@ -53,7 +53,7 @@ pub fn execute(args: Args) -> miette::Result<()> {
     log::info!("writing keys to public keys dir");
 
     log::debug!("writing wireguard public keys");
-    utils::write_to_file(pk_dir.as_path().join("wgpk"), &wgpk.to_string().as_bytes())?;
+    utils::write_to_file(pk_dir.as_path().join("wgpk"), wgpk.to_string().as_bytes())?;
 
     log::debug!("writing rosenpass public keys");
     utils::write_to_file(pk_dir.as_path().join("pqpk"), &public_key)?;

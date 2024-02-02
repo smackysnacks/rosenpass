@@ -1,7 +1,6 @@
 use clap::Parser;
 use clap_verbosity_flag::Verbosity;
 use env_logger::{Builder, WriteStyle};
-use log::LevelFilter;
 use rosenpass::sodium::sodium_init;
 
 use commands::{exchange, genkey, pubkey};
@@ -44,14 +43,7 @@ fn execute(args: Args) -> miette::Result<()> {
         miette::bail!("{e}");
     }
 
-    let level = match args.verbose.log_level_filter() {
-        clap_verbosity_flag::LevelFilter::Off => LevelFilter::Off,
-        clap_verbosity_flag::LevelFilter::Error => LevelFilter::Error,
-        clap_verbosity_flag::LevelFilter::Warn => LevelFilter::Warn,
-        clap_verbosity_flag::LevelFilter::Info => LevelFilter::Info,
-        clap_verbosity_flag::LevelFilter::Debug => LevelFilter::Debug,
-        clap_verbosity_flag::LevelFilter::Trace => LevelFilter::Trace,
-    };
+    let level = args.verbose.log_level_filter();
 
     Builder::new()
         .filter(None, level)
